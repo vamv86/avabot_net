@@ -1,0 +1,260 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "purchase": "Comprar",
+    "login": "Iniciar Sesión",
+    "register": "Comenzar",
+    "dashboard": "Panel",
+    "profile": "Perfil",
+    "logout": "Cerrar Sesión"
+  },
+  "home": {
+    "hero": {
+      "title": "Agente de IA Inteligente para WhatsApp",
+      "subtitle": "Automatiza tus conversaciones de WhatsApp con nuestro agente de IA avanzado. Proporciona soporte al cliente 24/7 y mejora la eficiencia de tu negocio.",
+      "startNow": "Comenzar Ahora",
+      "learnMore": "Saber Más"
+    },
+    "features": {
+      "title": "Características Poderosas",
+      "subtitle": "Todo lo que necesitas para transformar tu WhatsApp en una herramienta de negocio inteligente",
+      "whatsapp": {
+        "title": "Integración con WhatsApp",
+        "description": "Conecta sin problemas con la API de WhatsApp Business para respuestas automáticas y engagement con clientes."
+      },
+      "ai": {
+        "title": "Respuestas Impulsadas por IA",
+        "description": "Procesamiento avanzado de lenguaje natural para entender y responder a consultas de clientes inteligentemente."
+      },
+      "support": {
+        "title": "Soporte 24/7",
+        "description": "Tu agente de IA trabaja las 24 horas, proporcionando respuestas instantáneas a las consultas de los clientes."
+      }
+    },
+    "pricing": {
+      "title": "Precios Simples",
+      "subtitle": "Un plan, todas las características incluidas. Sin tarifas ocultas.",
+      "plan": {
+        "title": "AI Agent Pro",
+        "period": "por mes",
+        "features": {
+          "whatsapp": "Integración WhatsApp Business",
+          "ai": "Respuestas IA Avanzadas",
+          "support": "Soporte al Cliente 24/7",
+          "analytics": "Analíticas Detalladas"
+        },
+        "cta": "Comenzar Hoy"
+      }
+    },
+    "cta": {
+      "title": "¿Listo para Transformar tu Negocio?",
+      "subtitle": "Únete a miles de empresas que ya usan nuestro agente de IA para mejorar la satisfacción del cliente.",
+      "button": "Iniciar Prueba Gratuita"
+    }
+  },
+  "purchase": {
+    "title": "Comprar Acceso al Agente de IA",
+    "subtitle": "Obtén acceso instantáneo a nuestro agente de IA inteligente para WhatsApp y transforma tu servicio al cliente.",
+    "form": {
+      "title": "Tu Información",
+      "email": "Dirección de Email",
+      "emailPlaceholder": "Ingresa tu dirección de email",
+      "whatsapp": "Número de WhatsApp",
+      "whatsappPlaceholder": "+57 (300) 123-4567",
+      "name": "Nombre Completo",
+      "namePlaceholder": "Ingresa tu nombre completo"
+    },
+    "payment": {
+      "title": "Información de Pago",
+      "plan": "AI Agent Pro - Mensual",
+      "payWithBold": "Pagar con Bold",
+      "processing": "Procesando...",
+      "securePayment": "Pago seguro con Bold.co"
+    },
+    "plan": {
+      "title": "Qué Está Incluido",
+      "features": {
+        "whatsapp": "Integración completa con WhatsApp Business API",
+        "ai": "Manejo avanzado de conversaciones con IA",
+        "support": "Soporte prioritario al cliente 24/7",
+        "analytics": "Analíticas detalladas de conversaciones",
+        "updates": "Actualizaciones regulares de características y mejoras"
+      },
+      "whatHappenNext": "¿Qué pasa después?",
+      "steps": {
+        "payment": "Completa tu pago seguro",
+        "account": "Crearemos automáticamente tu cuenta",
+        "email": "Recibe instrucciones de configuración por email",
+        "setup": "Comienza a usar tu agente de IA inmediatamente"
+      }
+    },
+    "success": {
+      "title": "¡Pago exitoso! Revisa tu email para las credenciales de acceso."
+    },
+    "errors": {
+      "fillAllFields": "Por favor completa todos los campos requeridos",
+      "paymentFailed": "Pago fallido. Por favor intenta de nuevo."
+    }
+  },
+  "login": {
+    "title": "Bienvenido de Vuelta",
+    "subtitle": "Inicia sesión en tu panel de AI Agent",
+    "email": "Dirección de Email",
+    "emailPlaceholder": "Ingresa tu email",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Ingresa tu contraseña",
+    "loginButton": "Iniciar Sesión",
+    "loggingIn": "Iniciando sesión...",
+    "success": "¡Inicio de sesión exitoso!",
+    "error": "Credenciales inválidas. Por favor intenta de nuevo.",
+    "noAccount": "¿No tienes una cuenta?",
+    "signUp": "Regístrate aquí"
+  },
+  "register": {
+    "title": "Crear Cuenta",
+    "subtitle": "Únete a miles de empresas usando AI Agent",
+    "name": "Nombre Completo",
+    "namePlaceholder": "Ingresa tu nombre completo",
+    "email": "Dirección de Email",
+    "emailPlaceholder": "Ingresa tu email",
+    "whatsapp": "Número de WhatsApp",
+    "whatsappPlaceholder": "+57 (300) 123-4567",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Crea una contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "confirmPasswordPlaceholder": "Confirma tu contraseña",
+    "registerButton": "Crear Cuenta",
+    "registering": "Creando cuenta...",
+    "success": "¡Cuenta creada exitosamente! Por favor inicia sesión.",
+    "error": "Error al crear la cuenta. Por favor intenta de nuevo.",
+    "passwordMismatch": "Las contraseñas no coinciden",
+    "hasAccount": "¿Ya tienes una cuenta?",
+    "signIn": "Inicia sesión aquí"
+  },
+  "dashboard": {
+    "welcome": "Bienvenido",
+    "subtitle": "Administra tu suscripción de agente de IA y ve tus analíticas",
+    "subscription": {
+      "title": "Estado de Suscripción",
+      "plan": "Plan actual",
+      "month": "mes",
+      "nextBilling": "Siguiente Facturación",
+      "daysLeft": "días restantes",
+      "renew": "Renovar Suscripción",
+      "cancel": "Cancelar Suscripción",
+      "processing": "Procesando...",
+      "status": {
+        "active": "Activo",
+        "expired": "Expirado",
+        "canceled": "Cancelado",
+        "inactive": "Inactivo"
+      },
+      "renewSuccess": "¡Suscripción renovada exitosamente!",
+      "renewError": "Error al renovar la suscripción",
+      "cancelConfirm": "¿Estás seguro de que quieres cancelar tu suscripción?",
+      "cancelSuccess": "Suscripción cancelada exitosamente",
+      "cancelError": "Error al cancelar la suscripción"
+    },
+    "payment": {
+      "title": "Métodos de Pago",
+      "card": "Tarjeta",
+      "expires": "Expira",
+      "remove": "Eliminar",
+      "update": "Actualizar Método de Pago",
+      "add": "Agregar Método de Pago",
+      "updateInfo": "Actualización de método de pago próximamente",
+      "removeConfirm": "¿Estás seguro de que quieres eliminar este método de pago?",
+      "removeSuccess": "Método de pago eliminado exitosamente",
+      "removeError": "Error al eliminar método de pago"
+    },
+    "stats": {
+      "usage": "Estadísticas de Uso",
+      "messages": "Mensajes",
+      "responses": "Respuestas IA",
+      "uptime": "Tiempo Activo"
+    },
+    "support": {
+      "title": "¿Necesitas Ayuda?",
+      "description": "Nuestro equipo de soporte está aquí para ayudarte a sacar el máximo provecho de tu agente de IA.",
+      "contact": "Contactar Soporte"
+    }
+  },
+  "profile": {
+    "title": "Configuración de Perfil",
+    "subtitle": "Administra la información de tu cuenta y preferencias",
+    "personalInfo": {
+      "title": "Información Personal",
+      "edit": "Editar",
+      "save": "Guardar Cambios",
+      "cancel": "Cancelar",
+      "saving": "Guardando...",
+      "name": "Nombre Completo",
+      "email": "Dirección de Email",
+      "whatsapp": "Número de WhatsApp",
+      "memberSince": "Miembro Desde",
+      "updateSuccess": "¡Perfil actualizado exitosamente!",
+      "updateError": "Error al actualizar el perfil. Por favor intenta de nuevo."
+    },
+    "password": {
+      "title": "Cambiar Contraseña",
+      "current": "Contraseña Actual",
+      "currentPlaceholder": "Ingresa tu contraseña actual",
+      "new": "Nueva Contraseña",
+      "newPlaceholder": "Ingresa nueva contraseña",
+      "confirm": "Confirmar Nueva Contraseña",
+      "confirmPlaceholder": "Confirma nueva contraseña",
+      "change": "Cambiar Contraseña",
+      "changing": "Cambiando...",
+      "mismatch": "Las nuevas contraseñas no coinciden",
+      "tooShort": "La contraseña debe tener al menos 6 caracteres",
+      "changeSuccess": "¡Contraseña cambiada exitosamente!",
+      "changeError": "Error al cambiar la contraseña. Por favor intenta de nuevo."
+    },
+    "account": {
+      "status": "Estado de Cuenta",
+      "accountType": "Tipo de Cuenta",
+      "premium": "Premium",
+      "active": "Activo"
+    },
+    "actions": {
+      "title": "Acciones Rápidas",
+      "viewDashboard": "Ver Panel",
+      "downloadData": "Descargar Mis Datos",
+      "downloadSuccess": "¡Datos descargados exitosamente!",
+      "downloadError": "Error al descargar datos. Por favor intenta de nuevo."
+    },
+    "danger": {
+      "title": "Zona de Peligro",
+      "description": "Una vez que elimines tu cuenta, no hay vuelta atrás. Por favor ten certeza.",
+      "deleteAccount": "Eliminar Cuenta"
+    },
+    "deleteModal": {
+      "title": "Eliminar Cuenta",
+      "description": "Esta acción no se puede deshacer. Esto eliminará permanentemente tu cuenta y removerá tus datos de nuestros servidores. Escribe 'ELIMINAR' para confirmar.",
+      "placeholder": "Escribe ELIMINAR para confirmar",
+      "cancel": "Cancelar",
+      "confirm": "Eliminar Cuenta",
+      "success": "Cuenta eliminada exitosamente",
+      "error": "Error al eliminar la cuenta. Por favor intenta de nuevo."
+    },
+    "errors": {
+      "loadError": "Error al cargar datos del perfil"
+    }
+  },
+  "footer": {
+    "description": "Transforma tu WhatsApp en una herramienta de negocio inteligente con nuestro agente de IA avanzado.",
+    "links": "Enlaces Rápidos",
+    "features": "Características",
+    "contact": "Contacto",
+    "support": "Soporte",
+    "whatsappIntegration": "Integración WhatsApp",
+    "aiPowered": "Respuestas con IA",
+    "support247": "Soporte 24/7",
+    "email": "Email",
+    "phone": "Teléfono",
+    "allRightsReserved": "Todos los derechos reservados."
+  },
+  "messages": {
+    "logoutSuccess": "Sesión cerrada exitosamente"
+  }
+}

@@ -1,0 +1,260 @@
+{
+  "nav": {
+    "home": "Home",
+    "purchase": "Purchase",
+    "login": "Login",
+    "register": "Get Started",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "home": {
+    "hero": {
+      "title": "Intelligent AI Agent for WhatsApp",
+      "subtitle": "Automate your WhatsApp conversations with our advanced AI agent. Provide 24/7 customer support and boost your business efficiency.",
+      "startNow": "Start Now",
+      "learnMore": "Learn More"
+    },
+    "features": {
+      "title": "Powerful Features",
+      "subtitle": "Everything you need to transform your WhatsApp into an intelligent business tool",
+      "whatsapp": {
+        "title": "WhatsApp Integration",
+        "description": "Seamlessly connect with WhatsApp Business API for automated responses and customer engagement."
+      },
+      "ai": {
+        "title": "AI-Powered Responses",
+        "description": "Advanced natural language processing to understand and respond to customer queries intelligently."
+      },
+      "support": {
+        "title": "24/7 Support",
+        "description": "Your AI agent works around the clock, providing instant responses to customer inquiries."
+      }
+    },
+    "pricing": {
+      "title": "Simple Pricing",
+      "subtitle": "One plan, all features included. No hidden fees.",
+      "plan": {
+        "title": "AI Agent Pro",
+        "period": "per month",
+        "features": {
+          "whatsapp": "WhatsApp Business Integration",
+          "ai": "Advanced AI Responses",
+          "support": "24/7 Customer Support",
+          "analytics": "Detailed Analytics"
+        },
+        "cta": "Get Started Today"
+      }
+    },
+    "cta": {
+      "title": "Ready to Transform Your Business?",
+      "subtitle": "Join thousands of businesses already using our AI agent to improve customer satisfaction.",
+      "button": "Start Your Free Trial"
+    }
+  },
+  "purchase": {
+    "title": "Purchase AI Agent Access",
+    "subtitle": "Get instant access to our intelligent WhatsApp AI agent and transform your customer service.",
+    "form": {
+      "title": "Your Information",
+      "email": "Email Address",
+      "emailPlaceholder": "Enter your email address",
+      "whatsapp": "WhatsApp Number",
+      "whatsappPlaceholder": "+1 (555) 123-4567",
+      "name": "Full Name",
+      "namePlaceholder": "Enter your full name"
+    },
+    "payment": {
+      "title": "Payment Information",
+      "plan": "AI Agent Pro - Monthly",
+      "payWithBold": "Pay with Bold",
+      "processing": "Processing...",
+      "securePayment": "Secure payment powered by Bold.co"
+    },
+    "plan": {
+      "title": "What's Included",
+      "features": {
+        "whatsapp": "Full WhatsApp Business API integration",
+        "ai": "Advanced AI conversation handling",
+        "support": "24/7 priority customer support",
+        "analytics": "Detailed conversation analytics",
+        "updates": "Regular feature updates and improvements"
+      },
+      "whatHappensNext": "What happens next?",
+      "steps": {
+        "payment": "Complete your secure payment",
+        "account": "We'll automatically create your account",
+        "setup": "Receive setup instructions via email",
+        "start": "Start using your AI agent immediately"
+      }
+    },
+    "success": {
+      "title": "Payment successful! Check your email for login credentials."
+    },
+    "errors": {
+      "fillAllFields": "Please fill in all required fields",
+      "paymentFailed": "Payment failed. Please try again."
+    }
+  },
+  "login": {
+    "title": "Welcome Back",
+    "subtitle": "Sign in to your AI Agent dashboard",
+    "email": "Email Address",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "loginButton": "Sign In",
+    "loggingIn": "Signing in...",
+    "success": "Login successful!",
+    "error": "Invalid credentials. Please try again.",
+    "noAccount": "Don't have an account?",
+    "signUp": "Sign up here"
+  },
+  "register": {
+    "title": "Create Account",
+    "subtitle": "Join thousands of businesses using AI Agent",
+    "name": "Full Name",
+    "namePlaceholder": "Enter your full name",
+    "email": "Email Address",
+    "emailPlaceholder": "Enter your email",
+    "whatsapp": "WhatsApp Number",
+    "whatsappPlaceholder": "+1 (555) 123-4567",
+    "password": "Password",
+    "passwordPlaceholder": "Create a password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Confirm your password",
+    "registerButton": "Create Account",
+    "registering": "Creating account...",
+    "success": "Account created successfully! Please sign in.",
+    "error": "Failed to create account. Please try again.",
+    "passwordMismatch": "Passwords do not match",
+    "hasAccount": "Already have an account?",
+    "signIn": "Sign in here"
+  },
+  "dashboard": {
+    "welcome": "Welcome",
+    "subtitle": "Manage your AI agent subscription and view your analytics",
+    "subscription": {
+      "title": "Subscription Status",
+      "plan": "Current Plan",
+      "month": "month",
+      "nextBilling": "Next Billing",
+      "daysLeft": "days left",
+      "renew": "Renew Subscription",
+      "cancel": "Cancel Subscription",
+      "processing": "Processing...",
+      "status": {
+        "active": "Active",
+        "expired": "Expired",
+        "canceled": "Canceled",
+        "inactive": "Inactive"
+      },
+      "renewSuccess": "Subscription renewed successfully!",
+      "renewError": "Failed to renew subscription",
+      "cancelConfirm": "Are you sure you want to cancel your subscription?",
+      "cancelSuccess": "Subscription canceled successfully",
+      "cancelError": "Failed to cancel subscription"
+    },
+    "payment": {
+      "title": "Payment Methods",
+      "card": "Card",
+      "expires": "Expires",
+      "remove": "Remove",
+      "update": "Update Payment Method",
+      "add": "Add Payment Method",
+      "updateInfo": "Payment method update coming soon",
+      "removeConfirm": "Are you sure you want to remove this payment method?",
+      "removeSuccess": "Payment method removed successfully",
+      "removeError": "Failed to remove payment method"
+    },
+    "stats": {
+      "usage": "Usage Statistics",
+      "messages": "Messages",
+      "responses": "AI Responses",
+      "uptime": "Uptime"
+    },
+    "support": {
+      "title": "Need Help?",
+      "description": "Our support team is here to help you get the most out of your AI agent.",
+      "contact": "Contact Support"
+    }
+  },
+  "profile": {
+    "title": "Profile Settings",
+    "subtitle": "Manage your account information and preferences",
+    "personalInfo": {
+      "title": "Personal Information",
+      "edit": "Edit",
+      "save": "Save Changes",
+      "cancel": "Cancel",
+      "saving": "Saving...",
+      "name": "Full Name",
+      "email": "Email Address",
+      "whatsapp": "WhatsApp Number",
+      "memberSince": "Member Since",
+      "updateSuccess": "Profile updated successfully!",
+      "updateError": "Failed to update profile. Please try again."
+    },
+    "password": {
+      "title": "Change Password",
+      "current": "Current Password",
+      "currentPlaceholder": "Enter your current password",
+      "new": "New Password",
+      "newPlaceholder": "Enter new password",
+      "confirm": "Confirm New Password",
+      "confirmPlaceholder": "Confirm new password",
+      "change": "Change Password",
+      "changing": "Changing...",
+      "mismatch": "New passwords do not match",
+      "tooShort": "Password must be at least 6 characters long",
+      "changeSuccess": "Password changed successfully!",
+      "changeError": "Failed to change password. Please try again."
+    },
+    "account": {
+      "status": "Account Status",
+      "accountType": "Account Type",
+      "premium": "Premium",
+      "active": "Active"
+    },
+    "actions": {
+      "title": "Quick Actions",
+      "viewDashboard": "View Dashboard",
+      "downloadData": "Download My Data",
+      "downloadSuccess": "Data downloaded successfully!",
+      "downloadError": "Failed to download data. Please try again."
+    },
+    "danger": {
+      "title": "Danger Zone",
+      "description": "Once you delete your account, there is no going back. Please be certain.",
+      "deleteAccount": "Delete Account"
+    },
+    "deleteModal": {
+      "title": "Delete Account",
+      "description": "This action cannot be undone. This will permanently delete your account and remove your data from our servers. Type 'DELETE' to confirm.",
+      "placeholder": "Type DELETE to confirm",
+      "cancel": "Cancel",
+      "confirm": "Delete Account",
+      "success": "Account deleted successfully",
+      "error": "Failed to delete account. Please try again."
+    },
+    "errors": {
+      "loadError": "Failed to load profile data"
+    }
+  },
+  "footer": {
+    "description": "Transform your WhatsApp into an intelligent business tool with our advanced AI agent.",
+    "links": "Quick Links",
+    "features": "Features",
+    "contact": "Contact",
+    "support": "Support",
+    "whatsappIntegration": "WhatsApp Integration",
+    "aiPowered": "AI-Powered Responses",
+    "support247": "24/7 Support",
+    "email": "Email",
+    "phone": "Phone",
+    "allRightsReserved": "All rights reserved."
+  },
+  "messages": {
+    "logoutSuccess": "Logged out successfully"
+  }
+}

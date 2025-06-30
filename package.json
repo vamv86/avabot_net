@@ -1,0 +1,20 @@
+{
+  "name": "ai-agent-purchase-app",
+  "version": "1.0.0",
+  "description": "Vue.js application for AI agent purchase interface",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "install:frontend": "cd frontend && npm install",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build:frontend": "cd frontend && npm run build"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": ["ai", "agent", "subscription", "vue", "frontend"],
+  "author": "AI Agent Purchase App",
+  "license": "MIT"
+}
