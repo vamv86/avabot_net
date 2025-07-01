@@ -78,19 +78,20 @@ builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IBoldService, BoldService>();
-
-// ✅ Register N8NService with HttpClient support
 builder.Services.AddHttpClient<IN8NService, N8NService>();
 
-// CORS policy
+// ✅ CORS policy with Firebase and local dev allowed
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:3000")
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
+        policy.WithOrigins(
+            "http://localhost:3000",
+            "https://avabot-3b5c6.web.app"
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials(); // Usa esto solo si realmente estás manejando cookies con auth
     });
 });
 
@@ -107,9 +108,9 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-// Middlewares
+// Middleware
 app.UseHttpsRedirection();
-app.UseCors("AllowFrontend");
+app.UseCors("AllowFrontend"); // 👈 Asegúrate que esté antes de auth
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

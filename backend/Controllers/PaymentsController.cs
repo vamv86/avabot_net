@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using AiAgentApi.DTOs;
 using AiAgentApi.Services;
+using System.Text.Json;
 
 namespace AiAgentApi.Controllers;
 
@@ -55,5 +56,25 @@ public class PaymentsController : ControllerBase
             _logger.LogError(ex, "Error processing payment webhook");
             return StatusCode(500, new { message = "Internal server error" });
         }
+    }
+
+
+    [HttpPost("confirmation")]
+    public async Task<IActionResult> ReceiveConfirmation()
+    {
+        using var reader = new StreamReader(Request.Body);
+        var rawBody = await reader.ReadToEndAsync();
+
+        // Puedes registrar el body si quieres verificarlo
+        Console.WriteLine(rawBody);
+
+        // Deserializar
+        var confirmation = JsonSerializer.Deserialize<ConfirmationDto>(rawBody, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        });
+
+        // Puedes acceder ahora a confirmation.Id, confirmation.Data.PaymentId, etc.
+        return Ok("SUCCESS");
     }
 }
