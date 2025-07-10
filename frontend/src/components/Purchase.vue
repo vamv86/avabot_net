@@ -158,28 +158,47 @@ const openBoldCheckout = async () => {
     const { data } = await api.post('/api/BoldPayment/signature')
     const { orderId, amount, currency, signature } = data
 
-    const checkout = new window.BoldCheckout({
-      orderId,
-      amount: amount.toString(),
-      currency,
-      apiKey: 'gb6KQPBVWgamX8lh6Z9DwBjub81jUiUw-bANSL-vwhE',
-      integritySignature: signature,
-      description: 'Suscripción mensual WhatsApp IA',
-      redirectionUrl: 'https://avabot-3b5c6.web.app',
-      renderMode: 'embedded',
-      container: boldEmbedContainer.value,
-      customerData: JSON.stringify({
-        email: formData.value.email,
-        fullName: formData.value.name,
-        phone: formData.value.whatsapp,
-        dialCode: '+57',
-        documentNumber: '123456789',
-        documentType: 'CC'
-      })
+
+    // Create payment intent with Bold.co
+    const response = await api.post('/api/Auth/register-user-payment', {
+      email: formData.value.email,
+      whatsapp: formData.value.whatsapp,
+      name: formData.value.name
     })
 
-    boldEmbedContainer.value.innerHTML = ''
-    checkout.open()
+    if (response.data.success) {
+      // Puedes construir estos datos si no están antes
+      const orderId = 'ORD-' + Date.now() // ejemplo: deberías usar uno real
+      const amount = 30000 // valor en COP por ejemplo
+      const currency = 'COP'
+      const signature = 'firma-generada-desde-backend' // asegúrate de tener esta desde el backend o desde otro endpoint seguro
+
+      const checkout = new window.BoldCheckout({
+        orderId,
+        amount: amount.toString(),
+        currency,
+        apiKey: 'gb6KQPBVWgamX8lh6Z9DwBjub81jUiUw-bANSL-vwhE',
+        integritySignature: signature,
+        description: 'Suscripción mensual WhatsApp IA',
+        redirectionUrl: 'https://avabot-3b5c6.web.app',
+        renderMode: 'embedded',
+        container: boldEmbedContainer.value,
+        customerData: JSON.stringify({
+          email: formData.value.email,
+          fullName: formData.value.name,
+          phone: formData.value.whatsapp,
+          dialCode: '+57',
+          documentNumber: '123456789',
+          documentType: 'CC'
+        })
+      })
+
+      boldEmbedContainer.value.innerHTML = ''
+      checkout.open()
+    } else {
+      // Manejo de error si success === false
+      console.error('Error al registrar el usuario:', response.data.message)
+    }
   } catch (err) {
     console.error(err)
     toast.error(t('purchase.errors.paymentFailed'))

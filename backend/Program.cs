@@ -78,7 +78,10 @@ builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IBoldService, BoldService>();
+builder.Services.AddScoped<IOdooService, OdooService>();
 builder.Services.AddHttpClient<IN8NService, N8NService>();
+
+ 
 
 // ✅ CORS policy with Firebase and local dev allowed
 builder.Services.AddCors(options =>

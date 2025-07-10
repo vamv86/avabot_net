@@ -1,7 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using AiAgentApi.DTOs;
 using AiAgentApi.Services;
 using System.Text.Json;
+using PortaCapena.OdooJsonRpcClient.Models;
+using PortaCapena.OdooJsonRpcClient.Request;
+using PortaCapena.OdooJsonRpcClient;
+using System.Globalization;
 
 namespace AiAgentApi.Controllers;
 
@@ -11,10 +15,12 @@ public class PaymentsController : ControllerBase
 {
     private readonly IPaymentService _paymentService;
     private readonly ILogger<PaymentsController> _logger;
+    private readonly IOdooService _odooService;
 
-    public PaymentsController(IPaymentService paymentService, ILogger<PaymentsController> logger)
+    public PaymentsController(IPaymentService paymentService, IOdooService odooService, ILogger<PaymentsController> logger)
     {
         _paymentService = paymentService;
+        _odooService = odooService;
         _logger = logger;
     }
 
@@ -65,16 +71,12 @@ public class PaymentsController : ControllerBase
         using var reader = new StreamReader(Request.Body);
         var rawBody = await reader.ReadToEndAsync();
 
-        // Puedes registrar el body si quieres verificarlo
-        Console.WriteLine(rawBody);
-
-        // Deserializar
-        var confirmation = JsonSerializer.Deserialize<ConfirmationDto>(rawBody, new JsonSerializerOptions
+        var dto = JsonSerializer.Deserialize<BoldConfirmationDto>(rawBody, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         });
 
-        // Puedes acceder ahora a confirmation.Id, confirmation.Data.PaymentId, etc.
-        return Ok("SUCCESS");
+        var result = await _odooService.ProcesarPagoBoldAsync(dto);
+        return Ok(result);
     }
 }

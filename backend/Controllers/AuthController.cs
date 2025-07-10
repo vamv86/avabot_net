@@ -54,4 +54,27 @@ public class AuthController : ControllerBase
         
         return BadRequest(result);
     }
+
+
+    /// <summary>
+    /// User registration when Payment
+    /// </summary>
+    [HttpPost("register-user-payment")]
+    public async Task<ActionResult<AuthResponseDto>> RegisterUserPayment([FromBody] RegisterUserPaymentRequestDto request)
+    {
+        var result = await _authService.RegisterUserPaymentAsync(request);
+
+        if (result.Success && result.User != null)
+        {
+            // Notify N8N about new user registration
+            await _n8nService.NotifyUserRegistrationAsync(
+                result.User.Id,
+                result.User.Email,
+                result.User.WhatsApp);
+
+            return Ok(result);
+        }
+
+        return BadRequest(result);
+    }
 }
