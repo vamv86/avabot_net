@@ -9,22 +9,29 @@ namespace AiAgentApi.Controllers;
 public class BoldPaymentController : ControllerBase
 {
     private readonly IBoldService _boldService;
+    private readonly IOdooService _odooService;
 
-    public BoldPaymentController(IBoldService boldService)
+    public BoldPaymentController(
+        IBoldService boldService,
+        IOdooService odooService
+        )
     {
         _boldService = boldService;
+        _odooService = odooService;
     }
 
     [HttpPost("signature")]
-    public IActionResult GenerateSignature()
+    public async Task<IActionResult> GenerateSignature()
     {
         try
         {
             //string orderId = $"ORDER_{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}";
             string orderId = $"ORD{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}"; // sin guion bajo, sin "ORDER_"
 
-            string amount = "29000";
-            string currency = "COP";
+            var product = await _odooService.ObtenerProductoPorNombreAsync("AvaBot");
+
+            string amount = product.ListPrice.ToString().Replace(",",".");
+            string currency = product.CurrencyId[1].ToString();
 
             var signature = _boldService.GenerateSignature(orderId, amount, currency);
 
@@ -34,6 +41,29 @@ public class BoldPaymentController : ControllerBase
                 amount,
                 currency,
                 signature
+            });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+
+    [HttpPost("price-ava-bot")]
+    public async Task<IActionResult> GeneratePriceAvaBot()
+    {
+        try
+        {
+            var product = await _odooService.ObtenerProductoPorNombreAsync("AvaBot");
+
+            string amount = product.ListPrice.ToString().Replace(",", ".");
+            string currency = product.CurrencyId[1].ToString();
+     
+            return Ok(new
+            {
+                amount,
+                currency
             });
         }
         catch (Exception ex)

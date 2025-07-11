@@ -97,7 +97,23 @@
                 <StarIcon class="w-10 h-10 text-white" />
               </div>
               <h3 class="text-2xl font-bold text-primary-teal mb-2">{{ $t('home.pricing.plan.title') }}</h3>
-              <div class="text-4xl font-bold text-primary-orange mb-2">$29.99</div>
+              <div class="text-4xl font-bold text-primary-orange mb-2">
+                  <template v-if="planAmount !== null">
+                    ${{ planAmount }}
+                  </template>
+                  <template v-else>
+                    <svg
+                      class="animate-spin h-6 w-6 text-primary-orange inline"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24">
+                      <circle class="opacity-25" cx="12" cy="12" r="10"
+                              stroke="currentColor" stroke-width="4"></circle>
+                      <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                    </svg>
+                  </template>
+              </div>
               <p class="text-gray-600">{{ $t('home.pricing.plan.period') }}</p>
             </div>
 
@@ -153,4 +169,22 @@ import {
   StarIcon, 
   CheckIcon 
 } from '@heroicons/vue/24/outline'
+
+import { ref, onMounted } from 'vue'
+import api from '../utils/api.js'
+
+const planAmount = ref(null) 
+
+
+onMounted(async () => {
+  try {
+    
+    const { data } = await api.post('/api/BoldPayment/price-ava-bot')
+    planAmount.value = data.amount
+    } catch (err) {
+      console.error('Error al cargar el precio:', err)
+      planAmount.value = '' // fallback por si falla
+    }
+  })
+
 </script>

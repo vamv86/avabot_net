@@ -17,7 +17,7 @@ public interface IOdooService
 {
     Task<string> ProcesarPagoBoldAsync(BoldConfirmationDto dto);
     Task<(bool Success, string Message, long? PartnerId)> CrearPartnerAsync(OdooCreatePartnerDto dto);
-    Task<OdooProductModel> ObtenerProductoPOrNombreAsync(string name);
+    Task<OdooProductModel> ObtenerProductoPorNombreAsync(string name);
 
 }
 
@@ -221,23 +221,52 @@ public class OdooService : IOdooService
     /// <param name="name">Nombre exacto del producto en Odoo.</param>
     /// <returns>Modelo <see cref="OdooProductModel"/> del producto encontrado con detalles clave.</returns>
     /// <exception cref="Exception">Si no se encuentra el producto con el nombre especificado.</exception>
-    public async Task<OdooProductModel> ObtenerProductoPOrNombreAsync(string name)
+    public async Task<OdooProductModel> ObtenerProductoPorNombreAsync(string name)
     {
         var producto = (await _odooClient.GetAsync<OdooProductModel>(new OdooQuery
         {
             Filters = new OdooFilter().EqualTo("name", name),
             ReturnFields = {
-            "id",
-            "name",
-            "list_price",
-            "type",
-            "uom_id",
-            "currency_id",
-            "default_code",
-            "sale_ok",
-            "purchase_ok"
-        }
+        "id",
+        "name",
+        "list_price",
+        "type",
+        "uom_id",
+        "currency_id",
+        "default_code",
+        "sale_ok",
+        "purchase_ok",
+        "product_tmpl_id"
+    }
         })).Value.FirstOrDefault();
+
+        if (producto == null)
+            throw new Exception($"Producto '{name}' no encontrado.");
+
+
+        try
+        {
+            // se saca la lista de precios del producto
+            var precios = await _odooClient.GetAsync<OdooPricelistItemModel>(new OdooQuery
+            {
+                Filters = new OdooFilter()
+                    .EqualTo("product_tmpl_id", producto.ProductTemplateId[0]), // usas el template ID
+                ReturnFields = { "fixed_price", "pricelist_id", "currency_id" }
+            });
+
+            var currency = precios.Value[0].CurrencyId;
+            decimal price = precios.Value[0].FixedPrice;
+
+            producto.CurrencyId = currency;
+            producto.ListPrice = price;
+
+        }
+        catch (Exception ex)
+        {
+
+        }
+
+
 
         if (producto == null)
             throw new Exception($"Producto '{name}' no encontrado.");

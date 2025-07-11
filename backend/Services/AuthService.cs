@@ -182,11 +182,21 @@ public class AuthService : IAuthService
             }
             else
             {
+
                 return new AuthResponseDto
                 {
                     Success = true,
-                    Message = "User with this WhatsApp number already exists"
+                    Message = "User with this WhatsApp number already exists",
+                    User = new UserDto
+                    {
+                        Id = user.Id,
+                        Name = user.Name,
+                        Email = user.Email,
+                        WhatsApp = user.WhatsApp,
+                        CreatedAt = user.CreatedAt
+                    }
                 };
+                 
 
             }    
 

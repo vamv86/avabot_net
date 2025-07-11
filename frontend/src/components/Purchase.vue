@@ -46,8 +46,25 @@
                 {{ $t('purchase.payment.title') }}
               </h3>
               <div class="flex items-center justify-between mb-4">
-                <span class="text-gray-700">{{ $t('purchase.payment.plan') }}</span>
-                <span class="text-2xl font-bold text-primary-orange">$29.99</span>
+                <span class="text-gray-700">{{ $t('purchase.payment.plan') }}</span>                
+                <span class="text-2xl font-bold text-primary-orange">
+                  <template v-if="planAmount !== null">
+                    ${{ planAmount }}
+                  </template>
+                  <template v-else>
+                    <svg
+                      class="animate-spin h-6 w-6 text-primary-orange inline"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24">
+                      <circle class="opacity-25" cx="12" cy="12" r="10"
+                              stroke="currentColor" stroke-width="4"></circle>
+                      <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                    </svg>
+                  </template>
+                </span>
+
               </div>
 
               <!-- Custom Payment Trigger -->
@@ -116,7 +133,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useToast } from 'vue-toastification'
@@ -134,6 +151,19 @@ const formData = ref({
   whatsapp: '',
   name: ''
 })
+const planAmount = ref(null) 
+
+
+onMounted(async () => {
+  try {
+    
+    const { data } = await api.post('/api/BoldPayment/price-ava-bot')
+    planAmount.value = data.amount
+    } catch (err) {
+      console.error('Error al cargar el precio:', err)
+      planAmount.value = '' // fallback por si falla
+    }
+  })
 
 const openBoldCheckout = async () => {
   if (!formData.value.email || !formData.value.whatsapp || !formData.value.name) {
@@ -156,8 +186,7 @@ const openBoldCheckout = async () => {
     }
 
     const { data } = await api.post('/api/BoldPayment/signature')
-    const { orderId, amount, currency, signature } = data
-
+    const { orderId, amount, currency, signature } = data   
 
     // Create payment intent with Bold.co
     const response = await api.post('/api/Auth/register-user-payment', {
@@ -167,11 +196,6 @@ const openBoldCheckout = async () => {
     })
 
     if (response.data.success) {
-      // Puedes construir estos datos si no están antes
-      const orderId = 'ORD-' + Date.now() // ejemplo: deberías usar uno real
-      const amount = 30000 // valor en COP por ejemplo
-      const currency = 'COP'
-      const signature = 'firma-generada-desde-backend' // asegúrate de tener esta desde el backend o desde otro endpoint seguro
 
       const checkout = new window.BoldCheckout({
         orderId,

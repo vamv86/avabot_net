@@ -67,10 +67,10 @@ public class AuthController : ControllerBase
         if (result.Success && result.User != null)
         {
             // Notify N8N about new user registration
-            await _n8nService.NotifyUserRegistrationAsync(
-                result.User.Id,
-                result.User.Email,
-                result.User.WhatsApp);
+            //await _n8nService.NotifyUserRegistrationAsync(
+            //    result.User.Id,
+            //    result.User.Email,
+            //    result.User.WhatsApp);
 
             return Ok(result);
         }

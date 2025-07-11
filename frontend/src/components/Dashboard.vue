@@ -28,7 +28,8 @@
               <div class="bg-primary-gray p-4 rounded-xl">
                 <h3 class="font-semibold text-primary-teal mb-2">{{ $t('dashboard.subscription.plan') }}</h3>
                 <p class="text-2xl font-bold text-primary-orange">{{ subscription?.planName || 'AI Agent Pro' }}</p>
-                <p class="text-gray-600">$29.99/{{ $t('dashboard.subscription.month') }}</p>
+                <p class="text-gray-600">
+                   ${{ planAmount ?? '' }} /{{ $t('dashboard.subscription.month') }}</p>
               </div>
 
               <div class="bg-primary-gray p-4 rounded-xl">
@@ -138,6 +139,7 @@ const stats = ref({
   messagesThisMonth: 0,
   responsesThisMonth: 0
 })
+const planAmount = ref(null)
 
 const subscriptionStatusClass = computed(() => {
   if (!subscription.value) return 'bg-gray-400'
@@ -183,6 +185,17 @@ const getDaysUntilExpiry = () => {
 }
 
 const loadUserData = async () => {
+
+  try {
+      
+      const { data } = await api.post('/api/BoldPayment/price-ava-bot')
+      planAmount.value = data.amount
+    } catch (err) {
+      console.error('Error al cargar el precio:', err)
+      planAmount.value = '' // fallback por si falla
+    }
+
+
   try {
     const userData = localStorage.getItem('user')
     if (userData) {

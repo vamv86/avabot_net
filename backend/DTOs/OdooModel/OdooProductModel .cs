@@ -17,7 +17,10 @@ namespace AiAgentApi.DTOs
         public string DefaultCode { get; set; }  // Código interno del producto (SKU)
 
         [JsonProperty("list_price")]
-        public decimal ListPrice { get; set; }  // Precio de venta
+        public decimal ListPrice { get; set; }  // Precio de venta base
+
+        [JsonProperty("currency_id")]
+        public List<object> CurrencyId { get; set; }  // [id, "COP"]
 
         [JsonProperty("standard_price")]
         public decimal StandardPrice { get; set; }  // Costo
@@ -27,6 +30,9 @@ namespace AiAgentApi.DTOs
 
         [JsonProperty("active")]
         public bool Active { get; set; }
+
+        [JsonProperty("product_tmpl_id")]
+        public List<object> ProductTemplateId { get; set; }  // [id, "Nombre del template"]
     }
 
 }
