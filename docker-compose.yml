@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  # PostgreSQL Database
   postgres:
     image: postgres:15-alpine
     container_name: aiagent-postgres
@@ -16,7 +15,6 @@ services:
     networks:
       - aiagent-network
 
-  # Backend API
   backend:
     build:
       context: ./backend
@@ -25,6 +23,23 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ConnectionStrings__DefaultConnection=Host=postgres;Database=aiagent;Username=postgres;Password=postgres
+      - JWT__Secret=h2Ue9xL4qz3WmV7KpR6aY1fTnC0oX8BdJrEsMiZtUvGbQ5Nc
+      - JWT__Issuer=AiAgentApi
+      - JWT__Audience=AiAgentApp
+      - JWT__ExpiryInDays=7
+      - Bold__ApiKey=ydgILNf8rAjC2qsY-kTwUg
+      - Bold__BaseUrl=https://api.bold.co
+      - Bold__SuccessUrl=http://localhost:3000/purchase?payment=success
+      - Bold__FailureUrl=http://localhost:3000/purchase?payment=failed
+      - Email__Host=smtp.gmail.com
+      - Email__Port=587
+      - Email__Username=vamv86@gmail.com
+      - Email__Password=xsak aqgl iadv ruue
+      - Email__FromName=AI Agent
+      - Email__FromEmail=vamv86@gmail.com
+      - N8N__BaseUrl=http://localhost:5678
+      - N8N__ApiKey=your-n8n-api-key
+      - App__BaseUrl=http://localhost:5000
     ports:
       - "5000:8080"
     depends_on:
@@ -33,45 +48,10 @@ services:
       - aiagent-network
     volumes:
       - ./backend:/app
-    command: ["dotnet", "watch", "run", "--urls", "http://0.0.0.0:8080"]
-
-  # Frontend
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: aiagent-frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-    networks:
-      - aiagent-network
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    environment:
-      - VITE_API_URL=http://localhost:5000
-
-  # N8N (Optional - for workflow automation)
-  n8n:
-    image: n8nio/n8n:latest
-    container_name: aiagent-n8n
-    ports:
-      - "5678:5678"
-    environment:
-      - N8N_BASIC_AUTH_ACTIVE=true
-      - N8N_BASIC_AUTH_USER=admin
-      - N8N_BASIC_AUTH_PASSWORD=admin123
-      - WEBHOOK_URL=http://localhost:5678/
-    volumes:
-      - n8n_data:/home/node/.n8n
-    networks:
-      - aiagent-network
+    command: ["dotnet", "AiAgentApi.dll"]
 
 volumes:
   postgres_data:
-  n8n_data:
 
 networks:
   aiagent-network:
