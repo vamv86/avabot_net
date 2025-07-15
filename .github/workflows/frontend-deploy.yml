@@ -2,9 +2,10 @@ name: Build and Push Frontend to GHCR
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths:
       - 'frontend/**'
+      - '.github/workflows/frontend-deploy.yml'
 
 jobs:
   build:
@@ -23,6 +24,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Wait for git sync
+        run: sleep 10
 
       - name: Build and push frontend image
         uses: docker/build-push-action@v5
