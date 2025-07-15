@@ -1,58 +1,65 @@
-version: '3.8'
+version: '3.7'
 
 services:
-  postgres:
-    image: postgres:15-alpine
-    container_name: aiagent-postgres
-    environment:
-      POSTGRES_DB: aiagent
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - aiagent-network
 
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: aiagent-backend
+  aiagent_postgres:
+    image: postgres:15-alpine
+    volumes:
+      - aiagent_postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=aiagent
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - avanet
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
+  aiagent_backend:
+    image: vamv86/aiagent-backend:latest # Asegúrate de haber subido esta imagen previamente a Docker Hub
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__DefaultConnection=Host=postgres;Database=aiagent;Username=postgres;Password=postgres
+      - ConnectionStrings__DefaultConnection=Host=aiagent_postgres;Database=aiagent;Username=postgres;Password=postgres
       - JWT__Secret=h2Ue9xL4qz3WmV7KpR6aY1fTnC0oX8BdJrEsMiZtUvGbQ5Nc
       - JWT__Issuer=AiAgentApi
       - JWT__Audience=AiAgentApp
       - JWT__ExpiryInDays=7
       - Bold__ApiKey=ydgILNf8rAjC2qsY-kTwUg
       - Bold__BaseUrl=https://api.bold.co
-      - Bold__SuccessUrl=http://localhost:3000/purchase?payment=success
-      - Bold__FailureUrl=http://localhost:3000/purchase?payment=failed
+      - Bold__SuccessUrl=https://app.avainnova.com.co/purchase?payment=success
+      - Bold__FailureUrl=https://app.avainnova.com.co/purchase?payment=failed
       - Email__Host=smtp.gmail.com
       - Email__Port=587
       - Email__Username=vamv86@gmail.com
       - Email__Password=xsak aqgl iadv ruue
       - Email__FromName=AI Agent
       - Email__FromEmail=vamv86@gmail.com
-      - N8N__BaseUrl=http://localhost:5678
+      - N8N__BaseUrl=http://n8n:5678
       - N8N__ApiKey=your-n8n-api-key
-      - App__BaseUrl=http://localhost:5000
-    ports:
-      - "5000:8080"
-    depends_on:
-      - postgres
+      - App__BaseUrl=https://api.avainnova.com.co
     networks:
-      - aiagent-network
-    volumes:
-      - ./backend:/app
-    command: ["dotnet", "AiAgentApi.dll"]
+      - avanet
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.aiagent_backend.rule=Host(`api.avainnova.com.co`)
+        - traefik.http.routers.aiagent_backend.entrypoints=websecure
+        - traefik.http.routers.aiagent_backend.tls=true
+        - traefik.http.routers.aiagent_backend.service=aiagent_backend
+        - traefik.http.routers.aiagent_backend.tls.certresolver=letsencryptresolver
+        - traefik.http.services.aiagent_backend.loadbalancer.server.port=8080
 
 volumes:
-  postgres_data:
+  aiagent_postgres_data:
+    external: true
+    name: aiagent_postgres_data
 
 networks:
-  aiagent-network:
-    driver: bridge
+  avanet:
+    external: true
+    name: avanet
