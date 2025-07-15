@@ -2,7 +2,7 @@ name: Build and Push Frontend to GHCR
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
     paths:
       - 'frontend/**'
       - '.github/workflows/frontend-deploy.yml'
@@ -25,12 +25,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Wait for git sync
-        run: sleep 10
-
       - name: Build and push frontend image
         uses: docker/build-push-action@v5
         with:
           context: ./frontend
           push: true
           tags: ghcr.io/vamv86/aiagent-frontend:latest
+          no-cache: true
+          provenance: false
+          build-args: |
+            CACHE_BREAK=${{ github.sha }}
