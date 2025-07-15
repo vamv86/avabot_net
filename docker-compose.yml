@@ -54,6 +54,23 @@ services:
         - traefik.http.routers.aiagent_backend.tls.certresolver=letsencryptresolver
         - traefik.http.services.aiagent_backend.loadbalancer.server.port=8080
 
+  aiagent_frontend:
+    image: ghcr.io/vamv86/aiagent-frontend:latest
+    networks:
+      - avanet
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.aiagent_frontend.rule=Host(`ai.avainnova.com.co`)
+        - traefik.http.routers.aiagent_frontend.entrypoints=websecure
+        - traefik.http.routers.aiagent_frontend.tls=true
+        - traefik.http.routers.aiagent_frontend.service=aiagent_frontend
+        - traefik.http.routers.aiagent_frontend.tls.certresolver=letsencryptresolver
+        - traefik.http.services.aiagent_frontend.loadbalancer.server.port=80
+
 volumes:
   aiagent_postgres_data:
     external: true
