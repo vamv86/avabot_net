@@ -14,7 +14,6 @@
       </div>
 
       <div class="card">
-        <h1>Esto es una prueba 7</h1>
         <form @submit.prevent="login" class="space-y-6">
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">
