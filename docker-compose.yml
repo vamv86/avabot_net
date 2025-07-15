@@ -18,9 +18,7 @@ services:
           - node.role == manager
 
   aiagent_backend:
-    build:
-      context: ./backend  # Ruta relativa al archivo docker-compose.yml
-      dockerfile: Dockerfile
+    image: vamv86/aiagent-backend:latest # Asegúrate de haber subido esta imagen previamente a Docker Hub
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ConnectionStrings__DefaultConnection=Host=aiagent_postgres;Database=aiagent;Username=postgres;Password=postgres
