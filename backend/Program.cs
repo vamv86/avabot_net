@@ -90,7 +90,8 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins(
             "http://localhost:3000",
-            "https://avabot-3b5c6.web.app"
+            "https://avabot-3b5c6.web.app",
+            "https://ai.avainnova.com.co"
         )
         .AllowAnyHeader()
         .AllowAnyMethod()
