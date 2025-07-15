@@ -4,6 +4,8 @@ services:
 
   aiagent_postgres:
     image: postgres:15-alpine
+    ports:
+      - "5432:5432"
     volumes:
       - aiagent_postgres_data:/var/lib/postgresql/data
     environment:
