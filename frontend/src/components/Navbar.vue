@@ -88,7 +88,7 @@
               
               <button 
                 @click="logout"
-                class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                class="flex items-center w-full px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition-colors"
               >
                 <ArrowRightOnRectangleIcon class="w-4 h-4 mr-3" />
                 {{ $t('nav.logout') }}
@@ -128,7 +128,7 @@
             <router-link to="/profile" @click="mobileMenuOpen = false" class="text-primary-teal hover:text-primary-orange transition-colors">
               {{ $t('nav.profile') }}
             </router-link>
-            <button @click="logout" class="text-red-600 hover:text-red-800 transition-colors text-left">
+            <button @click="logout" class="text-red-500 hover:text-red-700 transition-colors text-left">
               {{ $t('nav.logout') }}
             </button>
           </div>
@@ -139,8 +139,8 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { 
   CpuChipIcon, 
@@ -154,6 +154,7 @@ import {
 import { useToast } from 'vue-toastification'
 
 const router = useRouter()
+const route = useRoute()
 const { locale, t } = useI18n()
 const toast = useToast()
 
@@ -162,13 +163,18 @@ const profileDropdownOpen = ref(false)
 const currentLocale = ref(locale.value)
 const profileDropdown = ref(null)
 
+// Estado reactivo para el login
+const authState = ref({
+  token: localStorage.getItem('token'),
+  user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
+})
+
 const isLoggedIn = computed(() => {
-  return !!localStorage.getItem('token')
+  return !!authState.value.token
 })
 
 const currentUser = computed(() => {
-  const userData = localStorage.getItem('user')
-  return userData ? JSON.parse(userData) : null
+  return authState.value.user
 })
 
 const userDisplayName = computed(() => {
@@ -177,6 +183,26 @@ const userDisplayName = computed(() => {
     return names.length > 1 ? `${names[0]} ${names[names.length - 1]}` : names[0]
   }
   return 'Usuario'
+})
+
+// Función para actualizar el estado de autenticación
+const updateAuthState = () => {
+  authState.value = {
+    token: localStorage.getItem('token'),
+    user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
+  }
+}
+
+// Escuchar cambios en localStorage
+const handleStorageChange = (e) => {
+  if (e.key === 'token' || e.key === 'user') {
+    updateAuthState()
+  }
+}
+
+// Escuchar cambios de ruta para actualizar estado
+watch(route, () => {
+  updateAuthState()
 })
 
 const changeLanguage = (event) => {
@@ -196,6 +222,7 @@ const closeProfileDropdown = () => {
 const logout = () => {
   localStorage.removeItem('token')
   localStorage.removeItem('user')
+  updateAuthState() // Actualizar estado inmediatamente
   closeProfileDropdown()
   toast.success(t('messages.logoutSuccess'))
   router.push('/')
@@ -214,10 +241,17 @@ onMounted(() => {
     locale.value = savedLocale
     currentLocale.value = savedLocale
   }
+  
+  // Actualizar estado inicial
+  updateAuthState()
+  
+  // Escuchar eventos
   document.addEventListener('click', handleClickOutside)
+  window.addEventListener('storage', handleStorageChange)
 })
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
+  window.removeEventListener('storage', handleStorageChange)
 })
 </script>
