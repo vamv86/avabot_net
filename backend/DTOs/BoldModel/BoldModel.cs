@@ -57,6 +57,7 @@
 
         [JsonPropertyName("payment_method")]
         public string PaymentMethod { get; set; }
+        public string? PayerPhone { get; set; }
     }
 
     public class BoldConfirmationAmount

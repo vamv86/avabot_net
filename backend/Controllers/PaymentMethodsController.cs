@@ -18,25 +18,25 @@ public class PaymentMethodsController : ControllerBase
     }
 
     /// <summary>
-    /// Remove user payment method
+    /// Remove payment method for a specific product subscription
     /// </summary>
-    [HttpDelete]
-    public async Task<IActionResult> RemovePaymentMethod()
+    [HttpDelete("{externalProductId}")]
+    public async Task<IActionResult> RemovePaymentMethod(string externalProductId)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        
+
         if (!int.TryParse(userIdClaim, out int userId))
         {
             return Unauthorized();
         }
 
-        var success = await _subscriptionService.RemovePaymentMethodAsync(userId);
-        
+        var success = await _subscriptionService.RemovePaymentMethodAsync(userId, externalProductId);
+
         if (success)
         {
             return Ok(new { success = true, message = "Payment method removed successfully" });
         }
-        
+
         return BadRequest(new { success = false, message = "Failed to remove payment method" });
     }
 }

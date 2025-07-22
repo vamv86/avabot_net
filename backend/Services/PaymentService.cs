@@ -148,8 +148,6 @@ public class PaymentService : IPaymentService
                     Currency = webhook.Currency,
                     StartDate = DateTime.UtcNow,
                     NextBillingDate = DateTime.UtcNow.AddMonths(1),
-                    PaymentProvider = "Bold",
-                    PaymentMethodId = webhook.PaymentId,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow
                 };
@@ -200,7 +198,6 @@ public class PaymentService : IPaymentService
             {
                 amount = (int)(subscription.Amount * 100), // Convert to cents
                 currency = subscription.Currency,
-                paymentMethodId = subscription.PaymentMethodId,
                 customerId = subscription.User.Id.ToString(),
                 description = $"AI Agent Pro - Monthly Subscription Renewal"
             };

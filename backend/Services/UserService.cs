@@ -25,7 +25,8 @@ public class UserService : IUserService
         try
         {
             var user = await _context.Users
-                .Include(u => u.Subscriptions)
+                .Include(u => u.Subscriptions.Where(s => s.Status == "active"))
+                    .ThenInclude(s => s.PaymentMethod)
                 .FirstOrDefaultAsync(u => u.Id == userId);
 
             if (user == null)
@@ -34,7 +35,6 @@ public class UserService : IUserService
             }
 
             var activeSubscription = user.Subscriptions
-                .Where(s => s.Status == "active")
                 .OrderByDescending(s => s.CreatedAt)
                 .FirstOrDefault();
 
@@ -51,12 +51,14 @@ public class UserService : IUserService
                     StartDate = activeSubscription.StartDate,
                     EndDate = activeSubscription.EndDate,
                     NextBillingDate = activeSubscription.NextBillingDate,
-                    PaymentMethod = !string.IsNullOrEmpty(activeSubscription.PaymentMethodId) 
+                    PaymentMethod = activeSubscription.PaymentMethod != null
                         ? new PaymentMethodDto
                         {
-                            LastFour = "1234", // This would come from payment provider
-                            ExpiryDate = "12/25", // This would come from payment provider
-                            Brand = "Visa" // This would come from payment provider
+                            LastFour = activeSubscription.PaymentMethod.Last4 ?? "****",
+                            ExpiryDate = activeSubscription.PaymentMethod.ExpiryMonth.HasValue && activeSubscription.PaymentMethod.ExpiryYear.HasValue
+                                ? $"{activeSubscription.PaymentMethod.ExpiryMonth:00}/{activeSubscription.PaymentMethod.ExpiryYear}"
+                                : "N/A",
+                            Brand = activeSubscription.PaymentMethod.Brand ?? "Unknown"
                         }
                         : null
                 };
@@ -64,8 +66,8 @@ public class UserService : IUserService
 
             var stats = new UsageStatsDto
             {
-                MessagesThisMonth = 142, // This would come from actual usage tracking
-                ResponsesThisMonth = 138, // This would come from actual usage tracking
+                MessagesThisMonth = 142,
+                ResponsesThisMonth = 138,
                 UptimePercentage = 99.9
             };
 
@@ -225,6 +227,7 @@ public class UserService : IUserService
         {
             var user = await _context.Users
                 .Include(u => u.Subscriptions)
+                    .ThenInclude(s => s.PaymentMethod)
                 .FirstOrDefaultAsync(u => u.Id == userId);
 
             if (user == null)
@@ -250,14 +253,26 @@ public class UserService : IUserService
                 Subscriptions = user.Subscriptions.Select(s => new
                 {
                     s.Id,
-                    s.Status,
+                    s.ExternalProductId,
+                    s.ProductName,
                     s.PlanName,
+                    s.Status,
                     s.Amount,
                     s.Currency,
                     s.StartDate,
                     s.EndDate,
                     s.NextBillingDate,
-                    s.PaymentProvider,
+                    PaymentMethod = s.PaymentMethod != null
+                        ? new
+                        {
+                            s.PaymentMethod.Provider,
+                            s.PaymentMethod.Brand,
+                            s.PaymentMethod.Last4,
+                            Expiry = s.PaymentMethod.ExpiryMonth.HasValue && s.PaymentMethod.ExpiryYear.HasValue
+                                ? $"{s.PaymentMethod.ExpiryMonth:00}/{s.PaymentMethod.ExpiryYear}"
+                                : "N/A"
+                        }
+                        : null,
                     s.CreatedAt,
                     s.UpdatedAt
                 }).ToList(),

@@ -14,10 +14,10 @@ namespace AiAgentApi.DTOs
         public decimal Amount { get; set; }
 
         [JsonProperty("payment_type")]
-        public string PaymentType { get; set; } // "inbound" o "outbound"
+        public string PaymentType { get; set; }
 
         [JsonProperty("partner_type")]
-        public string PartnerType { get; set; } // "customer" o "supplier"
+        public string PartnerType { get; set; }
 
         [JsonProperty("journal_id")]
         public long JournalId { get; set; }
@@ -26,7 +26,7 @@ namespace AiAgentApi.DTOs
         public long PaymentMethodLineId { get; set; }
 
         [JsonProperty("date")]
-        public string Date { get; set; } // formato "yyyy-MM-dd"
+        public string Date { get; set; }
 
         [JsonProperty("payment_reference")]
         public string PaymentReference { get; set; }
@@ -34,8 +34,12 @@ namespace AiAgentApi.DTOs
         [JsonProperty("memo")]
         public string Memo { get; set; }
 
-        // 👇 Campo que te faltaba — aquí es donde se asocia el pago con las facturas
         [JsonProperty("invoice_ids")]
         public object[] InvoiceIds { get; set; }
+
+        // 👇 Agrega esta línea
+        [JsonProperty("currency_id")]
+        public long CurrencyId { get; set; }  // [id, "COP"]
     }
+
 }

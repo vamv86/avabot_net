@@ -3,13 +3,20 @@ namespace AiAgentApi.DTOs;
 public class SubscriptionDto
 {
     public int Id { get; set; }
+
+    public string ExternalProductId { get; set; } // ID en Odoo
+    public string ProductName { get; set; } = string.Empty; // Nombre del producto
+
     public string Status { get; set; } = string.Empty;
     public string PlanName { get; set; } = string.Empty;
+
     public decimal Amount { get; set; }
     public string Currency { get; set; } = string.Empty;
+
     public DateTime StartDate { get; set; }
     public DateTime? EndDate { get; set; }
     public DateTime? NextBillingDate { get; set; }
+
     public PaymentMethodDto? PaymentMethod { get; set; }
 }
 

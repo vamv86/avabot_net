@@ -20,30 +20,30 @@ public class SubscriptionService : ISubscriptionService
         _logger = logger;
     }
 
-    public async Task<PaymentResponseDto> RenewSubscriptionAsync(int userId)
+    public async Task<PaymentResponseDto> RenewSubscriptionAsync(int userId, string externalProductId)
     {
         try
         {
             var subscription = await _context.Subscriptions
-                .FirstOrDefaultAsync(s => s.UserId == userId && s.Status == "active");
+                .FirstOrDefaultAsync(s => s.UserId == userId &&
+                                          s.ExternalProductId == externalProductId &&
+                                          s.Status == "active");
 
             if (subscription == null)
             {
                 return new PaymentResponseDto
                 {
                     Success = false,
-                    Message = "No active subscription found"
+                    Message = "No active subscription found for this product"
                 };
             }
 
-            // If payment method is saved, process recurring payment
-            if (!string.IsNullOrEmpty(subscription.PaymentMethodId))
+            if (subscription.PaymentMethodId.HasValue)
             {
                 return await _paymentService.ProcessRecurringPaymentAsync(subscription.Id);
             }
             else
             {
-                // Redirect to payment page for new payment
                 var user = await _context.Users.FindAsync(userId);
                 if (user == null)
                 {
@@ -59,7 +59,7 @@ public class SubscriptionService : ISubscriptionService
                     Email = user.Email,
                     WhatsApp = user.WhatsApp,
                     Name = user.Name,
-                    Amount = (int)(subscription.Amount * 100), // Convert to cents
+                    Amount = (int)(subscription.Amount * 100),
                     Currency = subscription.Currency
                 };
 
@@ -77,12 +77,14 @@ public class SubscriptionService : ISubscriptionService
         }
     }
 
-    public async Task<bool> CancelSubscriptionAsync(int userId)
+    public async Task<bool> CancelSubscriptionAsync(int userId, string externalProductId)
     {
         try
         {
             var subscription = await _context.Subscriptions
-                .FirstOrDefaultAsync(s => s.UserId == userId && s.Status == "active");
+                .FirstOrDefaultAsync(s => s.UserId == userId &&
+                                          s.ExternalProductId == externalProductId &&
+                                          s.Status == "active");
 
             if (subscription == null)
             {
@@ -103,12 +105,14 @@ public class SubscriptionService : ISubscriptionService
         }
     }
 
-    public async Task<bool> RemovePaymentMethodAsync(int userId)
+    public async Task<bool> RemovePaymentMethodAsync(int userId, string externalProductId)
     {
         try
         {
             var subscription = await _context.Subscriptions
-                .FirstOrDefaultAsync(s => s.UserId == userId && s.Status == "active");
+                .FirstOrDefaultAsync(s => s.UserId == userId &&
+                                          s.ExternalProductId == externalProductId &&
+                                          s.Status == "active");
 
             if (subscription == null)
             {
@@ -116,7 +120,6 @@ public class SubscriptionService : ISubscriptionService
             }
 
             subscription.PaymentMethodId = null;
-            subscription.PaymentToken = null;
             subscription.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();

@@ -8,7 +8,7 @@ namespace AiAgentApi.DTOs
     public class OdooCreateInvoice : IOdooCreateModel
     {
         [JsonProperty("partner_id")]
-        public long ?PartnerId { get; set; }
+        public long? PartnerId { get; set; }
 
         [JsonProperty("move_type")]
         public string MoveType { get; set; }
@@ -21,5 +21,9 @@ namespace AiAgentApi.DTOs
 
         [JsonProperty("invoice_line_ids")]
         public object[] InvoiceLineIds { get; set; }
+
+        // 👇 Agrega esta línea
+        [JsonProperty("currency_id")]
+        public long CurrencyId { get; set; }  // [id, "COP"]
     }
 }
